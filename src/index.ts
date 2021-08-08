@@ -6,6 +6,10 @@ import { Buffer } from "buffer";
 import { parse } from "querystring";
 
 export const generateTermDefinitionWithHashlink = (termName: string, termDefinition: any): any => {
+  if(termDefinition["@definition"] === undefined) {
+    throw new Error("It's expected that the @definition property MUST be defined.");
+  }
+  
   if (termDefinition["@id"] === undefined) {
      throw Error(`No @id property is defined for the term: ${termName}`);
   }

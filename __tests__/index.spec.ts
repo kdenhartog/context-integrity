@@ -21,6 +21,19 @@ describe("create integrity protected term definitions", () => {
     });
   });
 
+    it("Should fail generates an integrity protected term definition because the @definition is missing", () => {
+      const termName = "name";
+      const termDefinition = {
+        "@protected": true,
+        "@id": "http://schema.org/name",
+        type: "@type",
+      };
+
+      expect(() => {
+        generateTermDefinitionWithHashlink(termName, termDefinition);
+      }).toThrowError("It's expected that the @definition property MUST be defined.");
+    });
+
   it("Should fail to generate an integrity protected fails because the @id is missing", () => {
     const termName = "name";
     const termDefinition = {
