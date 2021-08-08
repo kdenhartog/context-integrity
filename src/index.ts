@@ -60,5 +60,6 @@ export const decodeHashlink = (data: any): { validationData: any, hashlink: stri
 export const validateTermDefinition = (termDefinition: any): boolean => {
   const {validationData, hashlink} = decodeHashlink(termDefinition);
   const regeneratedHashlink = encodeHashlink(validationData);
+  // TODO abstract this logic more to compare across different multibase encodings of the hashlink
   return regeneratedHashlink === hashlink;
 };
