@@ -1,7 +1,7 @@
 import { generateTermDefinitionWithHashlink, decodeHashlink, validateTermDefinition } from "../src/index";
 
 describe("create integrity protected term definitions", () => {
-  it("Should successfully generates an integrity protected term definition", async () => {
+  it("Should successfully generates an integrity protected term definition", () => {
     const termName = "name";
     const termDefinition = {
       "@protected": true,
@@ -10,8 +10,7 @@ describe("create integrity protected term definitions", () => {
       type: "@type",
     };
 
-    const termDefintionWithIntegrity = await generateTermDefinitionWithHashlink(termName, termDefinition);
-    console.log(termDefintionWithIntegrity);
+    const termDefintionWithIntegrity = generateTermDefinitionWithHashlink(termName, termDefinition);
     expect(termDefintionWithIntegrity["@id"] !== termDefinition["@id"]).toBe(true);
     expect(termDefintionWithIntegrity).toMatchObject({
       "@protected": true,
