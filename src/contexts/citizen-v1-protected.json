@@ -1,0 +1,11 @@
+{
+  "@context": {
+    "@version": 1.2,
+    "name": {
+     "@protected": true,
+     "@id": "http://schema.org/name",
+     "@definition": "The name of the citizenship document.",
+     "type": "@type"
+    }
+  }
+}
