@@ -1,4 +1,4 @@
-import { generateTermDefinitionWithHashlink, decodeHashlink } from "../src/index";
+import { generateTermDefinitionWithHashlink, decodeHashlink, validateTermDefinition } from "../src/index";
 
 describe("create integrity protected term definitions", () => {
   it("Should successfully generates an integrity protected term definition", async () => {
@@ -48,7 +48,7 @@ describe("decodes the hashlink", () => {
     expect(result).toMatchObject({
       validationData: {
         ...termDefinition,
-        "@id": baseId
+        "@id": baseId,
       },
       hashlink,
     });
@@ -87,10 +87,33 @@ describe("decodes the hashlink", () => {
       "@id": `${baseId}?${malformedHashlinkQueryString}`,
       "@definition": "The name of the citizenship document.",
       type: "@type",
-    };    
+    };
     expect(() => {
       const result = decodeHashlink(termDefinition);
       console.log(JSON.stringify(result));
     }).toThrowError("The hashlink query parameter is malformed.");
   });
+});
+describe("validates integrity protected term definitions", () => {
+  it("Should successfully validate an integrity protected term definition", () => {
+    const termDefinition = {
+      "@protected": true,
+      "@id": "http://schema.org/name?hl=z6auZj6TcoreKaT6m6E3ETvBxgDKcLfBhwKCKoKJZGW3oE",
+      "@definition": "The name of the citizenship document.",
+      type: "@type",
+    };
+    const result = validateTermDefinition(termDefinition);
+    expect(result).toBe(true);
+  });
+
+    it("Should fail validate an integrity protected term definition because it's been modified", () => {
+      const termDefinition = {
+        "@protected": true,
+        "@id": "http://schema.org/name?hl=z6auZj6TcoreKaT6m6E3ETvBxgDKcLfBhwKCKoKJZGW3oE",
+        "@definition": "This definition has been changed.",
+        type: "@type",
+      };
+      const result = validateTermDefinition(termDefinition);
+      expect(result).toBe(false);
+    });
 });

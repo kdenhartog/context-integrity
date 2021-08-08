@@ -58,5 +58,7 @@ export const decodeHashlink = (data: any): { validationData: any, hashlink: stri
 }
 
 export const validateTermDefinition = (termDefinition: any): boolean => {
-  throw Error("Not Implemented");
+  const {validationData, hashlink} = decodeHashlink(termDefinition);
+  const regeneratedHashlink = encodeHashlink(validationData);
+  return regeneratedHashlink === hashlink;
 };
