@@ -3,6 +3,7 @@ import { hash } from "@stablelib/sha256";
 import bs58 from 'bs58';
 import { addPrefix } from "multicodec";
 import { Buffer } from "buffer";
+import { parse } from "querystring";
 
 export const generateTermDefinitionWithHashlink = (termName: string, termDefinition: any): any => {
   if (termDefinition["@id"] === undefined) {
@@ -26,6 +27,35 @@ export const encodeHashlink = (data: any): string => {
   const prefixedBytes = addPrefix("sha2-256", digestBytes);
   return `${MULTIBASE_ENCODING_PREFIX}${bs58.encode(prefixedBytes)}`;
 };
+
+export const decodeHashlink = (data: any): { validationData: any, hashlink: string } => {
+  if(data["@id"] === undefined) {
+    throw new Error("No @id property can be found.");
+  }
+  // TODO: Validate that the termId is a valid URL
+  const termId: string = data["@id"];
+  const parsedTermId = termId.split("?");
+
+
+  // TODO fix this hack to make it not specific to where the query string is.
+  // Should be able to find a library that can be used for this.
+  const parsedQueryString = parse(parsedTermId[1])
+  
+  if(parsedQueryString.hl === undefined) {
+    throw new Error("No Hashlink was included on the term definition @id.");
+  }
+  if(typeof parsedQueryString.hl !== "string") {
+    throw new Error("The hashlink query parameter is malformed.");
+  }
+
+  return {
+    validationData: {
+      ...data,
+      "@id": parsedTermId[0]
+    },
+    hashlink: parsedQueryString.hl
+  }
+}
 
 export const validateTermDefinition = (termDefinition: any): boolean => {
   throw Error("Not Implemented");

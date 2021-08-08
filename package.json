@@ -28,6 +28,7 @@
     "buffer": "5.4.3",
     "hashlink": "0.12.1",
     "json-canonicalize": "1.0.4",
-    "multicodec": "^3.1.0"
+    "multicodec": "^3.1.0",
+    "query-string": "^7.0.1"
   }
 }
