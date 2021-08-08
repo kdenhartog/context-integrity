@@ -26,9 +26,8 @@
     "@stablelib/sha256": "^1.0.1",
     "bs58": "4.0.1",
     "buffer": "5.4.3",
-    "hashlink": "0.12.1",
     "json-canonicalize": "1.0.4",
-    "multicodec": "^3.1.0",
-    "query-string": "^7.0.1"
+    "multicodec": "3.1.0",
+    "query-string": "7.0.1"
   }
 }
