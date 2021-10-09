@@ -1,4 +1,4 @@
-import { generateTermDefinitionWithHashlink, decodeHashlink, validateTermDefinition } from "../src/index";
+import { generateTermDefinitionWithHashlink, decodeHashlink, validateTermDefinition, generateContext } from "../src/index";
 
 describe("create integrity protected term definitions", () => {
   it("Should successfully generates an integrity protected term definition", () => {
@@ -128,4 +128,33 @@ describe("validates integrity protected term definitions", () => {
       const result = validateTermDefinition(termDefinition);
       expect(result).toBe(false);
     });
+});
+
+describe("generates an integrity protected context file", () => {
+  const context = {
+    "@context": {
+      "@version": 1.2,
+      "name": {
+      "@protected": true,
+      "@id": "http://schema.org/name",
+      "@definition": "The name of the citizenship document.",
+      "type": "@type"
+      }
+    }
+  };
+
+  const expectedResult = {
+    "@context": {
+      "@version": 1.2,
+      name: {
+        "@protected": true,
+        "@id": "http://schema.org/name?hl=z6auZj6TcoreKaT6m6E3ETvBxgDKcLfBhwKCKoKJZGW3oE",
+        "@definition": "The name of the citizenship document.",
+        type: "@type",
+      },
+    },
+  };
+
+  const result = generateContext(context);
+  expect(result).toBe(expectedResult);
 });
