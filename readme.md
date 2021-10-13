@@ -2,7 +2,7 @@
 
 ## Why?
 
-Currently when it comes to handling semantic data in a JSON-LD context the purpose is only about structuring the data in the document. This improvement intendeds to add the capability to make the JSON-LD Context document maintain integrity of the semantics used throughout the document. The reason the integrity of the semantics need to remain in tact is because when you're signing the semantics of a document, any changes to the structure will end up breaking the signature and affecting the validation process.
+Currently when it comes to handling semantic data in a JSON-LD context the purpose is only about structuring the data in the document. This improvement intends to add the capability to make the JSON-LD Context document maintain integrity of the semantics used throughout the document. The reason the integrity of the semantics need to remain in tact is because when you're signing the semantics of a document, any changes to the structure will end up breaking the signature and affecting the validation process.
 
 ## How?
 
